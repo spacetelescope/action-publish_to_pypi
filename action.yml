@@ -1,0 +1,7 @@
+name: 'Publish to PyPI'
+description: 'Publish a package to PyPI after performing version checks.'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+        - 'none'
