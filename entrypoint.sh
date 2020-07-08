@@ -2,6 +2,16 @@
 
 set -e
 
+# Publish to the PyPI testing instance URL if the env var 
+# TWINE_TEST is set to a non-empty value, otherwise publish
+# to the main index.
+URL_ARG=""
+if [[ ${TWINE_TEST} != "" ]]; then
+    echo "TWINE_TEST env var is set to a non-null value;"
+    echo " twine call will publish to PyPI testing instance."
+    URL_ARG="--repository-url https://test.pypi.org/legacy/"
+fi
+
 REF=$GITHUB_REF
 echo "GITHUB_REF=${REF}"
 
@@ -35,3 +45,5 @@ TWINE=$(which twine)
 
 echo "Publish..."
 $TWINE upload --repository-url https://test.pypi.org/legacy/ dist/*
+$TWINE upload $URL_ARG dist/*
+echo "${TWINE} upload ${URL_ARG} dist/*"
