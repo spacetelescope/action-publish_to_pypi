@@ -44,6 +44,4 @@ $PYTHON setup.py build sdist --format=gztar
 TWINE=$(which twine)
 
 echo "Publish..."
-$TWINE upload --repository-url https://test.pypi.org/legacy/ dist/*
 $TWINE upload $URL_ARG dist/*
-echo "${TWINE} upload ${URL_ARG} dist/*"
