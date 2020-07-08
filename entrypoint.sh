@@ -3,13 +3,25 @@
 set -e
 
 # Publish to the PyPI testing instance URL if the env var 
-# TWINE_TEST is set to a non-empty value, otherwise publish
+# PYPI_TEST is set to a non-empty value, otherwise publish
 # to the main index.
 URL_ARG=""
-if [[ ${TWINE_TEST} != "" ]]; then
-    echo "TWINE_TEST env var is set to a non-null value;"
+if [[ "${PYPI_TEST}" != "" ]]; then
+    echo "PYPI_TEST env var is set to a non-null value;"
     echo " twine call will publish to PyPI testing instance."
     URL_ARG="--repository-url https://test.pypi.org/legacy/"
+fi
+
+TWINE_USERNAME=$PYPI_USERNAME_STSCI_MAINTAINER
+if [[ "${PYPI_USERNAME_OVERRIDE}" != "" ]]; then
+    echo "TWINE_USERNAME override using secrets value for this repository."
+    TWINE_USERNAME=$PYPI_USERNAME_OVERRIDE
+fi
+
+TWINE_PASSWORD=$PYPI_PASSWORD_STSCI_MAINTAINER
+if [[ "${PYPI_PASSWORD_OVERRIDE}" != "" ]]; then
+    echo "TWINE_PASSWORD override using secrets value for this repository."
+    TWINE_PASSWORD=$PYPI_PASSWORD_OVERRIDE
 fi
 
 REF=$GITHUB_REF
@@ -36,7 +48,7 @@ echo "Install publication deps"
 $PIP install twine semver
 
 # Validate the version
-$PYTHON /validate_version.py ${REF}
+$PYTHON /validate_version.py $REF
 
 echo "Prepare for publication..."
 $GIT clean -fxd
