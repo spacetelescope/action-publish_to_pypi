@@ -31,7 +31,7 @@ Whenever a new release with a semver-compliant tag is made on Github from the re
 
 The default set of credentials used to publish packages to PyPI are those of the PyPI account `stsci_maintainer`. If you want or need to use other credentials, they may be specified as secrets in the settings of the Github repository.
 
-   1) Open the Settings page of the repository (top porton of the page, on the line under the repository name)
+   1) Open the **Settings** page of the repository (top porton of the page, on the line under the repository name)
    2) Select **Secrets** from the list on the left hand side.
    3) Define a secret with the name `PYPI_USERNAME_OVERRIDE` the value of which is the PyPI username to be used.
    4) Define another secret with the name `PYPI_PASSWORD_OVERRIDE` the value of which is the PyPI password to be used.
