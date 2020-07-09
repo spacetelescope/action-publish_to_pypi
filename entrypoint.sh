@@ -7,17 +7,17 @@ set -e
 # to the main index.
 URL_ARG=""
 if [[ "${PYPI_TEST}" != "" ]]; then
-    printf "\n----------------------------------------------------------------\n"
-    printf "PYPI_TEST var set. Will attempt to publish to the PyPI\n"
-    printf "testing instance.\n"
-    printf "----------------------------------------------------------------\n"
+    echo -e "\n----------------------------------------------------------------\n"
+    echo "PYPI_TEST var set. Will attempt to publish to the PyPI"
+    echo "testing instance."
+    echo -e "----------------------------------------------------------------\n"
     URL_ARG="--repository-url https://test.pypi.org/legacy/"
 fi
 
 if [[ "${PYPI_USERNAME_OVERRIDE}" != "" ]]; then
-    printf "\n----------------------------------------------------------------\n"
-    printf "TWINE_USERNAME override var set for this repository.\n"
-    printf "----------------------------------------------------------------\n"
+    echo -e "\n----------------------------------------------------------------\n"
+    echo "TWINE_USERNAME override var set for this repository."
+    echo -e "----------------------------------------------------------------\n"
     TWINE_USERNAME=$PYPI_USERNAME_OVERRIDE
 else
     TWINE_USERNAME=$PYPI_USERNAME_STSCI_MAINTAINER
@@ -25,9 +25,9 @@ fi
 export TWINE_USERNAME
 
 if [[ "${PYPI_PASSWORD_OVERRIDE}" != "" ]]; then
-    printf "\n----------------------------------------------------------------\n"
-    printf "TWINE_PASSWORD override var set for this repository.\n"
-    printf "----------------------------------------------------------------\n"
+    echo -e "\n ----------------------------------------------------------------\n"
+    echo "TWINE_PASSWORD override var set for this repository."
+    echo -e " ----------------------------------------------------------------\n"
     TWINE_PASSWORD=$PYPI_PASSWORD_OVERRIDE
 else
     TWINE_PASSWORD=$PYPI_PASSWORD_STSCI_MAINTAINER
