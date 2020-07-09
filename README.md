@@ -5,7 +5,11 @@ This repository does not need to be cloned or interacted with in order to take a
 See below for documentation.
 
 Default criteria for publishing a release:
-   * Tag must conform to the semantic versioning specification (https://semver.org/).
+   * Tag must conform to the semantic versioning specification (https://semver.org/). i.e.
+      * 0.0.8
+      * 1.0.0
+      * 1.0.0-alpha
+      * 1.0.0-alpha.1
 
 ## How to use
 
@@ -43,4 +47,4 @@ Whenever a new release is made, the package will be created and published to PyP
 
 ## Problems
 
-If a problem occurs with the publication, an e-mail message with "Run failed: Publish to PyPI" in the subject will be sent to you containing a link to the logs from the attempt.
+If a problem occurs with the publication, an e-mail message with "Run failed: Publish to PyPI" in the subject will be sent to all users subscribed to notifications from the repository in question. The message will contain a link to the logs from the publication attempt.
