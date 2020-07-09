@@ -7,13 +7,17 @@ set -e
 # to the main index.
 URL_ARG=""
 if [[ "${PYPI_TEST}" != "" ]]; then
-    echo "PYPI_TEST env var is set to a non-null value;"
-    echo " twine call will publish to PyPI testing instance."
+    printf "\n----------------------------------------------------------------\n"
+    printf "PYPI_TEST var set. Will attempt to publish to the PyPI\n"
+    printf "testing instance.\n"
+    printf "\n----------------------------------------------------------------\n"
     URL_ARG="--repository-url https://test.pypi.org/legacy/"
 fi
 
 if [[ "${PYPI_USERNAME_OVERRIDE}" != "" ]]; then
-    echo "TWINE_USERNAME override using secrets value for this repository."
+    printf "\n----------------------------------------------------------------\n"
+    printf "TWINE_USERNAME override var set for this repository.\n"
+    printf "----------------------------------------------------------------\n"
     TWINE_USERNAME=$PYPI_USERNAME_OVERRIDE
 else
     TWINE_USERNAME=$PYPI_USERNAME_STSCI_MAINTAINER
@@ -21,7 +25,9 @@ fi
 export TWINE_USERNAME
 
 if [[ "${PYPI_PASSWORD_OVERRIDE}" != "" ]]; then
-    echo "TWINE_PASSWORD override using secrets value for this repository."
+    printf "\n----------------------------------------------------------------\n"
+    printf "TWINE_PASSWORD override var set for this repository.\n"
+    printf "----------------------------------------------------------------\n"
     TWINE_PASSWORD=$PYPI_PASSWORD_OVERRIDE
 else
     TWINE_PASSWORD=$PYPI_PASSWORD_STSCI_MAINTAINER
@@ -45,19 +51,19 @@ echo "GIT=${GIT}"
 
 $PYTHON --version
 
-echo "Install package"
+printf "Install package\n\n"
 $PIP install .
 
-echo "Install publication deps"
+printf "Install publication deps\n\n"
 $PIP install twine semver
 
 # Validate the version
 $PYTHON /validate_version.py $REF
 
-echo "Prepare for publication..."
+printf "Prepare for publication...\n\n"
 $GIT clean -fxd
 $PYTHON setup.py build sdist --format=gztar
 TWINE=$(which twine)
 
-echo "Publish..."
+printf "Publish...\n\n"
 $TWINE upload $URL_ARG dist/*
