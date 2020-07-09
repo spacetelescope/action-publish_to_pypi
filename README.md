@@ -18,7 +18,7 @@ Stipulations:
 
 ### To add publication capability to a repository
 
-   1) On the main repository page, click `Actions` at the top, just below the name of the repository.
+   1) On the main repository page, click **Actions** at the top, just below the name of the repository.
    2) In the **Workflows made for your Python repository**, locate the "*Publish to PyPI*" workflow made by "Space Telescope Science Institute"
    3) Click the **Set up this workflow** button. This will open a commit page with the workflow code that will be added to the repository.
    4) Click the **Start Commit** button in the upper right hand corner.
