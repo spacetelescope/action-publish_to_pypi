@@ -12,6 +12,7 @@ if [[ "${PYPI_TEST}" != "" ]]; then
     URL_ARG="--repository-url https://test.pypi.org/legacy/"
 fi
 
+echo "U OVERRIDE: ${PYPI_USERNAME_OVERRIDE}"
 if [[ "${PYPI_USERNAME_OVERRIDE}" != "" ]]; then
     echo "TWINE_USERNAME override using secrets value for this repository."
     TWINE_USERNAME=$PYPI_USERNAME_OVERRIDE
@@ -20,6 +21,7 @@ else
 fi
 export TWINE_USERNAME
 
+echo "P OVERRIDE: ${PYPI_PASSWORD_OVERRIDE}"
 if [[ "${PYPI_PASSWORD_OVERRIDE}" != "" ]]; then
     echo "TWINE_PASSWORD override using secrets value for this repository."
     TWINE_PASSWORD=$PYPI_PASSWORD_OVERRIDE
