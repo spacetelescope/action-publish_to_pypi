@@ -10,7 +10,7 @@ if [[ "${PYPI_TEST}" != "" ]]; then
     printf "\n----------------------------------------------------------------\n"
     printf "PYPI_TEST var set. Will attempt to publish to the PyPI\n"
     printf "testing instance.\n"
-    printf "\n----------------------------------------------------------------\n"
+    printf "----------------------------------------------------------------\n"
     URL_ARG="--repository-url https://test.pypi.org/legacy/"
 fi
 
