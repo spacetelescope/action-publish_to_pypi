@@ -51,6 +51,9 @@ echo "GIT=${GIT}"
 
 $PYTHON --version
 
+$GIT fetch -t
+$GIT tag
+
 printf "Install package\n\n"
 $PIP install .
 
