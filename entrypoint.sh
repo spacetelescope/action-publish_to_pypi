@@ -39,7 +39,7 @@ echo "GITHUB_REF=${REF}"
 
 PYTHON=$(which python3.6)
 echo "PYTHON=${PYTHON}"
-PIP=$(which pip3)
+PIP="${PYTHON} -m pip"
 echo "PIP=${PIP}"
 GCC=$(which gcc)
 echo "GCC=${GCC}"
