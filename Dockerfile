@@ -10,7 +10,6 @@ RUN apt-get update \
     && pip3 install pip --upgrade \
     && pip3 install setuptools --upgrade
   
-
 # Copies code file action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
 
