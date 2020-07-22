@@ -7,8 +7,8 @@ RUN apt-get update \
     python3-pip \
     python3.6 \
     git \
-    && pip3 install pip --upgrade \
-    && pip3 install setuptools --upgrade
+    && python3 -m pip install --upgrade pip \
+    && python3 -m pip install --upgrade setuptools
   
 # Copies code file action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
