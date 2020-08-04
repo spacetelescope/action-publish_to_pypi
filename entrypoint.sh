@@ -58,14 +58,24 @@ printf "Install package\n\n"
 $PIP install .
 
 printf "Install publication deps\n\n"
-$PIP install twine semver
+$PIP install twine semver pep517
 
 # Validate the version
 $PYTHON /validate_version.py $REF
 
 printf "Prepare for publication...\n\n"
 $GIT clean -fxd
-$PYTHON setup.py build sdist --format=gztar
+if [[ -e pyproject.toml ]]; then
+    grep "build-backend" pyproject.toml
+    retval=$?
+fi
+if [[ $retval -eq 0 ]]; then
+    echo -e "\n\nDetected a PEP517-compatible project..."
+    $PYTHON -m pep517.build --source .
+else
+    echo -e "\n\nBuilding sdist via setup.py..."
+    $PYTHON setup.py build sdist --format=gztar
+fi
 TWINE=$(which twine)
 
 printf "Publish...\n\n"
