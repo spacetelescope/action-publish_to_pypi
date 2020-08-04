@@ -65,7 +65,7 @@ $PYTHON /validate_version.py $REF
 
 printf "Prepare for publication...\n\n"
 $GIT clean -fxd
-retval = 1
+retval=1
 if [[ -e pyproject.toml ]]; then
     grep "build-backend" pyproject.toml
     retval=$?
