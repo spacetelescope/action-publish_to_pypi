@@ -1,7 +1,5 @@
 #!/bin/bash -l
 
-set -e
-
 # Publish to the PyPI testing instance URL if the env var 
 # PYPI_TEST is set to a non-empty value, otherwise publish
 # to the main index.
@@ -67,6 +65,7 @@ printf "Prepare for publication...\n\n"
 $GIT clean -fxd
 retval=1
 if [[ -e pyproject.toml ]]; then
+    echo "Found a pyproject.toml file"
     grep "build-backend" pyproject.toml
     retval=$?
 fi
