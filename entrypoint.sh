@@ -56,7 +56,7 @@ printf "Install package\n\n"
 $PIP install .
 
 printf "Install publication deps\n\n"
-$PIP install twine semver pep517
+$PIP install twine semver build
 
 # Validate the version
 $PYTHON /validate_version.py $REF
@@ -71,7 +71,7 @@ if [[ -e pyproject.toml ]]; then
 fi
 if [[ $retval -eq 0 ]]; then
     echo -e "\n\nDetected a PEP517-compatible project..."
-    $PYTHON -m pep517.build --source .
+    $PYTHON -m build --sdist .
 else
     echo -e "\n\nBuilding sdist via setup.py..."
     $PYTHON setup.py build sdist --format=gztar
