@@ -56,7 +56,7 @@ printf "Install package\n\n"
 $PIP install .
 
 printf "Install publication deps\n\n"
-$PIP install twine semver pep517
+$PIP install "twine>=3.3" semver pep517
 
 # Validate the version
 $PYTHON /validate_version.py $REF
@@ -77,6 +77,8 @@ else
     $PYTHON setup.py build sdist --format=gztar
 fi
 TWINE=$(which twine)
+
+$TWINE check --strict dist/*
 
 printf "Publish...\n\n"
 $TWINE upload $URL_ARG dist/*
