@@ -1,0 +1,23 @@
+name: 'Build source distribution'
+description: 'Build a Python source distribution using build and upload the resulting artifact'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v2
+      name: Install Python
+      with:
+        python-version: '3.8'
+
+    - name: Install build tools
+      shell: 'bash'
+      run: python -m pip install build
+
+    - name: Build sdist
+      shell: 'bash'
+      run: python -m build --sdist
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: dist/*.tar.gz

@@ -1,0 +1,25 @@
+name: 'Validate metadata'
+description: 'Validates tagged package version is a valid semver value'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-python@v2
+      name: Install Python
+      with:
+        python-version: '3.8'
+
+    - name: Validate tag
+      shell: 'bash'
+      run: |
+        python -m pip install semver
+        echo "
+        import os
+        import semver
+
+        gitref = os.environ['GITHUB_REF']
+        print(f'\nVersion validation argument: {gitref}')
+        tag = gitref.split('/')[-1]
+        print(f'Tag: {tag}')
+        version = semver.VersionInfo.parse(tag)
+        print('Tag is a valid semver value.')
+        " | python
