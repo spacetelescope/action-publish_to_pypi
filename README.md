@@ -1,6 +1,6 @@
 # Automatic publication of Python packages to PyPI
 
-This repository defines a Github action to provide opt-in automatic publication of Python packages to PyPI upon qualifying Github release events.
+This repository defines a Github action to provide opt-in automatic publication of Python packages to PyPI upon qualifying Github release events. It also defines separate custom Github action steps for building Python wheels and source distributions, validating repository metadata, and publishing to PyPI.
 This repository does not need to be cloned or interacted with in order to take advantage of the service.
 See below for documentation.
 
@@ -40,10 +40,18 @@ The default set of credentials used to publish packages to PyPI are those of the
 
    1) Open the **Settings** page of the repository (top portion of the page, on the line under the repository name).
    2) Select **Secrets** from the list on the left hand side.
-   3) Define a secret with the name `PYPI_USERNAME_OVERRIDE` the value of which is the PyPI username to be used.
-   4) Define another secret with the name `PYPI_PASSWORD_OVERRIDE` the value of which is the PyPI password to be used.
+   3) Define a secret with the name `PYPI_USERNAME_STSCI_MAINTAINER` the value of which is the PyPI username to be used.
+   4) Define another secret with the name `PYPI_PASSWORD_STSCI_MAINTAINER` the value of which is the PyPI password to be used.
    
 Whenever a new release is made, the package will be created and published to PyPI using the supplied credentials.
+
+### Testing the workflow
+
+By default, the workflow will publish to the production PyPI repository. For testing purposes, it can be configured to publish to the test PyPI repository at https://test.pypi.org by creating a secret called `PYPI_TEST`:
+
+   1) Open the **Settings** page of the repository (top portion of the page, on the line under the repository name).
+   2) Select **Secrets** from the list on the left hand side.
+   3) Define a secret with the name `PYPI_TEST` the value of which is 'true'.
 
 ## Problems
 
