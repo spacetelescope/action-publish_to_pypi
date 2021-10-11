@@ -1,0 +1,49 @@
+name: Publish to PyPI
+
+on:
+  workflow_call:
+    secrets:
+      test:
+        required: false
+      user:
+        required: true
+      password:
+        required: true
+      test_password:
+        required: false
+
+jobs:
+  validate:
+    name: Validate metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/validate@master
+
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    needs: [validate]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-10.15]
+
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/build-wheel@master
+
+  build_sdist:
+    name: Build source distribution
+    needs: [validate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/build-sdist@master
+
+  upload_pypi:
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/publish@master
+        with:
+          test: ${{ secrets.test }}
+          user: ${{ secrets.user }}
+          password: ${{ secrets.password }}
+          test_password: ${{ secrets.test_password }}
