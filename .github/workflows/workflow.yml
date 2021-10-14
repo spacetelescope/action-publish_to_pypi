@@ -1,0 +1,95 @@
+name: Publish to PyPI
+
+on:
+  workflow_call:
+    inputs:
+      test:
+        required: false
+        default: false
+        type: boolean
+      build_platform_wheels:
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      user:
+        required: true
+      password:
+        required: true
+      test_password:
+        required: false
+
+jobs:
+  validate:
+    name: Validate metadata
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/validate@master
+
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    if: ${{ inputs.build_platform_wheels }}
+    needs: [validate]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-10.15]
+
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/build-wheel@master
+
+  build_wheel:
+    name: Build wheel
+    if: ${{ !inputs.build_platform_wheels }}
+    needs: [validate]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: '3.8'
+
+      - name: Install build tools
+        run: python -m pip install build
+
+      - name: Build wheel
+        run: python -m build --wheel .
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: dist/*.whl
+
+  build_sdist:
+    name: Build source distribution
+    needs: [validate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/build-sdist@master
+
+  upload_pypi_platform_wheels:
+    if: ${{ inputs.build_platform_wheels }}
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/publish@master
+        with:
+          test: ${{ inputs.test }}
+          user: ${{ secrets.user }}
+          password: ${{ secrets.password }}
+          test_password: ${{ secrets.test_password }}
+
+  upload_pypi:
+    if: ${{ !inputs.build_platform_wheels }}
+    needs: [build_wheel, build_sdist]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: spacetelescope/action-publish_to_pypi/publish@master
+        with:
+          test: ${{ inputs.test }}
+          user: ${{ secrets.user }}
+          password: ${{ secrets.password }}
+          test_password: ${{ secrets.test_password }}
