@@ -47,9 +47,9 @@ runs:
 
     - uses: pypa/gh-action-pypi-publish@v1.4.2
       with:
-        user: ${{ (inputs.test && (inputs.test_user || inputs.user)) || inputs.user }}
-        password: ${{ (inputs.test && (inputs.test_password || inputs.password)) || inputs.password }}
-        repository_url: ${{ (inputs.test && inputs.test_repository_url) || inputs.repository_url }}
+        user: ${{ (inputs.test == 'true' && inputs.test_user) || inputs.user }}
+        password: ${{ (inputs.test == 'true' && inputs.test_password) || inputs.password }}
+        repository_url: ${{ (inputs.test == 'true' && inputs.test_repository_url) || inputs.repository_url }}
         verify_metadata: ${{ inputs.verify_metadata }}
         skip_existing: ${{ inputs.skip_existing }}
         verbose: ${{ inputs.verbose }}
