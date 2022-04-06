@@ -10,7 +10,7 @@ runs:
     - uses: actions/setup-python@v2
       name: Install Python
       with:
-        python-version: '3.8'
+        python-version: '3.9'
 
     - name: Configure Numpy builds on macos if necessary
       shell: 'bash'
