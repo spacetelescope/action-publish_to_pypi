@@ -20,6 +20,6 @@ runs:
         print(f'\nVersion validation argument: {gitref}')
         tag = gitref.split('/')[-1]
         print(f'Tag: {tag}')
-        version = semver.VersionInfo.parse(tag)
+        version = semver.VersionInfo.parse(tag.lstrip('v'))
         print('Tag is a valid semver value.')
         " | python
