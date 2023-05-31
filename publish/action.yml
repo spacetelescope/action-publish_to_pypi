@@ -40,12 +40,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: artifact
         path: dist
 
-    - uses: pypa/gh-action-pypi-publish@v1.4.2
+    - uses: pypa/gh-action-pypi-publish@v1
       with:
         user: ${{ (inputs.test == 'true' && inputs.test_user) || inputs.user }}
         password: ${{ (inputs.test == 'true' && inputs.test_password) || inputs.password }}
